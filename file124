@@ -1,0 +1,46 @@
+class Solution {
+public:
+    int longestSubstring(string s, int k) 
+    {
+        if(s.size()==0||s.size()<k)
+        {
+            return 0;
+        }
+        if(k<=1)
+        {
+            return s.size();
+        }
+        
+        unordered_map<char,int>mp;
+        
+        for(int i=0;i<s.size();i++)
+        {
+            mp[s[i]]++;
+        }
+        
+        int l=0;
+        
+        while(l<s.size()&&mp[s[l]]>=k)
+        {
+            l++;
+        }
+        
+        if(l>=s.size()-1)
+        {
+            return l;
+        }
+        
+        int p=longestSubstring(s.substr(0,l),k);
+        
+        while(l<s.size()&&mp[s[l]]<k)
+        {
+            l++;
+        }
+        
+        int r = (l < s.size()) ? longestSubstring(s.substr(l), k) : 0;
+    return max(p, r);
+        
+            
+        
+    }
+};
